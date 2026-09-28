@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Visionariamente · Lo que queda</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================
+           VARIABLES
+        ========================================================== */
+
+        :root {
+            --night: #111c1b;
+            --night-soft: #172725;
+            --forest: #264d46;
+            --sage: #8fae9f;
+            --sage-light: #c7d8ce;
+
+            --cream: #f5f0e7;
+            --cream-soft: #ece4d8;
+
+            --terracotta: #c8785d;
+            --terracotta-light: #df9a80;
+
+            --gold: #d6b877;
+            --ink: #26302e;
+
+            --serif: "Playfair Display", Georgia, serif;
+            --sans: "DM Sans", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--cream);
+            color: var(--ink);
+            font-family: var(--sans);
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--terracotta);
+            color: white;
+        }
+
+        /* ==========================================================
+           UTILIDADES
+        ========================================================== */
+
+        .container {
+            width: min(1160px, calc(100% - 48px));
+            margin: auto;
+        }
+
+        .eyebrow {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .25em;
+            font-weight: 600;
+            color: var(--terracotta);
+        }
+
+        .serif {
+            font-family: var(--serif);
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        /* ==========================================================
+           PROGRESS
+        ========================================================== */
+
+        .progress {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 3px;
+            width: 0;
+            z-index: 9999;
+            background: linear-gradient(
+                90deg,
+                var(--terracotta),
+                var(--gold),
+                var(--sage)
+            );
+        }
+
+        /* ==========================================================
+           HERO
+        ========================================================== */
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(143,174,159,.12),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(200,120,93,.12),
+                    transparent 30%
+                ),
+                var(--night);
+
+            color: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* estrellas / partículas */
+
+        .stars {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,.55);
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%,100% {
+                opacity: .15;
+                transform: scale(.8);
+            }
+
+            50% {
+                opacity: .8;
+                transform: scale(1.5);
+            }
+        }
+
+        .hero-orbit {
+            position: absolute;
+            width: min(70vw, 750px);
+            aspect-ratio: 1;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 50%;
+            animation: rotate 35s linear infinite;
+        }
+
+        .hero-orbit::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            top: 18%;
+            left: 10%;
+            box-shadow: 0 0 30px var(--gold);
+        }
+
+        .hero-orbit.two {
+            width: min(50vw, 530px);
+            animation-direction: reverse;
+            animation-duration: 27s;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 80px 25px;
+        }
+
+        .hero-kicker {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: intro 1s .3s forwards;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: clamp(4.5rem, 12vw, 10rem);
+            line-height: .9;
+            letter-spacing: -.055em;
+            margin: 24px 0;
+
+            opacity: 0;
+            transform: translateY(25px);
+            animation: intro 1.2s .55s forwards;
+        }
+
+        .hero h1 span {
+            color: var(--terracotta-light);
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-family: var(--serif);
+            font-size: clamp(1.15rem, 2vw, 1.6rem);
+            line-height: 1.6;
+            color: rgba(245,240,231,.75);
+            max-width: 680px;
+            margin: auto;
+
+            opacity: 0;
+            transform: translateY(20px);
+            animation: intro 1.1s .85s forwards;
+        }
+
+        @keyframes intro {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            color: rgba(255,255,255,.45);
+            font-size: .62rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            height: 45px;
+            width: 1px;
+            background: rgba(255,255,255,.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -100%;
+            width: 100%;
+            height: 100%;
+            background: white;
+            animation: scrollLine 2s infinite;
+        }
+
+        @keyframes scrollLine {
+            to {
+                top: 100%;
+            }
+        }
+
+        /* ==========================================================
+           INTRO / CARTA
+        ========================================================== */
+
+        .letter {
+            padding: 150px 0;
+            position: relative;
+        }
+
+        .letter-grid {
+            display: grid;
+            grid-template-columns: .7fr 1.7fr;
+            gap: 90px;
+            align-items: start;
+        }
+
+        .letter-side {
+            position: sticky;
+            top: 100px;
+        }
+
+        .letter-number {
+            font-family: var(--serif);
+            font-size: 6rem;
+            color: rgba(38,77,70,.08);
+            line-height: 1;
+            margin-bottom: 25px;
+        }
+
+        .letter-content {
+            max-width: 760px;
+        }
+
+        .letter-content h2 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: clamp(2.7rem, 5vw, 5rem);
+            line-height: 1.06;
+            letter-spacing: -.04em;
+            color: var(--forest);
+            margin-bottom: 55px;
+        }
+
+        .letter-content h2 em {
+            color: var(--terracotta);
+            font-weight: 400;
+        }
+
+        .letter-content p {
+            font-family: var(--serif);
+            font-size: clamp(1.18rem, 1.7vw, 1.42rem);
+            line-height: 1.9;
+            color: #4e5653;
+            margin-bottom: 28px;
+        }
+
+        .letter-content p:first-of-type::first-letter {
+            float: left;
+            font-size: 5.5rem;
+            line-height: .72;
+            margin: 14px 12px 0 0;
+            color: var(--terracotta);
+        }
+
+        .letter-highlight {
+            margin: 70px 0;
+            padding-left: 35px;
+            border-left: 2px solid var(--terracotta);
+        }
+
+        .letter-highlight p {
+            font-size: clamp(1.7rem, 3vw, 2.7rem);
+            line-height: 1.4;
+            color: var(--forest);
+            font-style: italic;
+            margin: 0;
+        }
+
+        /* ==========================================================
+           VALUES
+        ========================================================== */
+
+        .values {
+            background: var(--night);
+            color: var(--cream);
+            padding: 140px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .values::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(200,120,93,.06);
+            filter: blur(10px);
+            right: -180px;
+            top: -180px;
+        }
+
+        .values-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 40px;
+            margin-bottom: 75px;
+        }
+
+        .values h2 {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 500;
+            letter-spacing: -.04em;
+            line-height: 1;
+            max-width: 750px;
+        }
+
+        .values h2 em {
+            color: var(--sage);
+            font-weight: 400;
+        }
+
+        .values-intro {
+            max-width: 330px;
+            color: rgba(255,255,255,.55);
+            line-height: 1.8;
+            font-size: .95rem;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255,255,255,.1);
+            border-left: 1px solid rgba(255,255,255,.1);
+        }
+
+        .value-card {
+            min-height: 310px;
+            padding: 42px;
+            border-right: 1px solid rgba(255,255,255,.1);
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            position: relative;
+            transition: .5s ease;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                145deg,
+                rgba(143,174,159,.12),
+                rgba(200,120,93,.08)
+            );
+            opacity: 0;
+            transition: .5s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-icon {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .value-card h3 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .value-card p {
+            color: rgba(255,255,255,.55);
+            line-height: 1.75;
+            font-size: .9rem;
+            position: relative;
+        }
+
+        /* ==========================================================
+           CONSTELLATION
+        ========================================================== */
+
+        .constellation {
+            padding: 160px 0;
+            background: #e9e2d6;
+            text-align: center;
+        }
+
+        .constellation h2 {
+            font-family: var(--serif);
+            color: var(--forest);
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 500;
+            line-height: 1.05;
+            margin: 20px auto 25px;
+            max-width: 850px;
+            letter-spacing: -.04em;
+        }
+
+        .constellation > .container > p {
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.8;
+            color: #67706d;
+        }
+
+        .people {
+            margin-top: 90px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .person {
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            border: 1px solid rgba(38,77,70,.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: .4s ease;
+            background: rgba(255,255,255,.15);
+        }
+
+        .person:nth-child(even) {
+            margin-top: 55px;
+        }
+
+        .person:hover {
+            background: var(--forest);
+            color: white;
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--forest);
+        }
+
+        .person-name {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+        }
+
+        .person::after {
+            content: "✦";
+            position: absolute;
+            top: 8px;
+            right: 20px;
+            color: var(--terracotta);
+            font-size: .7rem;
+        }
+
+        /* ==========================================================
+           BIG QUOTE
+        ========================================================== */
+
+        .big-quote {
+            min-height: 85vh;
+            background: var(--terracotta);
+            color: #fff7ef;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-mark {
+            position: absolute;
+            font-family: var(--serif);
+            font-size: 40rem;
+            line-height: .7;
+            opacity: .055;
+            left: -20px;
+            top: 80px;
+        }
+
+        .big-quote blockquote {
+            position: relative;
+            max-width: 1000px;
+            margin: auto;
+            text-align: center;
+            font-family: var(--serif);
+            font-size: clamp(2.7rem, 5.5vw, 5.8rem);
+            line-height: 1.17;
+            letter-spacing: -.035em;
+        }
+
+        .big-quote blockquote em {
+            color: #ffd9c7;
+        }
+
+        /* ==========================================================
+           MEMORIES
+        ========================================================== */
+
+        .memories {
+            padding: 150px 0;
+        }
+
+        .memories-header {
+            max-width: 780px;
+            margin-bottom: 80px;
+        }
+
+        .memories h2 {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 500;
+            color: var(--forest);
+            letter-spacing: -.04em;
+            line-height: 1.05;
+            margin: 18px 0 25px;
+        }
+
+        .memories-header p {
+            line-height: 1.8;
+            color: #66706d;
+        }
+
+        .memory-list {
+            border-top: 1px solid rgba(38,77,70,.18);
+        }
+
+        .memory {
+            display: grid;
+            grid-template-columns: 100px 1fr 40px;
+            gap: 30px;
+            align-items: center;
+            padding: 35px 0;
+            border-bottom: 1px solid rgba(38,77,70,.18);
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .memory:hover {
+            padding-left: 20px;
+        }
+
+        .memory-number {
+            font-family: var(--serif);
+            color: var(--terracotta);
+        }
+
+        .memory-text {
+            font-family: var(--serif);
+            font-size: clamp(1.35rem, 2.5vw, 2rem);
+            color: var(--forest);
+        }
+
+        .memory-arrow {
+            font-size: 1.4rem;
+            color: var(--terracotta);
+            transition: .3s;
+        }
+
+        .memory:hover .memory-arrow {
+            transform: rotate(45deg);
+        }
+
+        /* ==========================================================
+           FINAL
+        ========================================================== */
+
+        .final {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(143,174,159,.12),
+                    transparent 40%
+                ),
+                var(--night);
+
+            color: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-content {
+            max-width: 950px;
+            padding: 120px 25px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .final-small {
+            text-transform: uppercase;
+            letter-spacing: .25em;
+            font-size: .7rem;
+            color: var(--sage);
+            margin-bottom: 40px;
+        }
+
+        .final h2 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: clamp(3.2rem, 7vw, 7rem);
+            line-height: 1.03;
+            letter-spacing: -.045em;
+            margin-bottom: 45px;
+        }
+
+        .final h2 em {
+            color: var(--terracotta-light);
+            font-weight: 400;
+        }
+
+        .final-text {
+            max-width: 650px;
+            margin: auto;
+            font-family: var(--serif);
+            color: rgba(255,255,255,.65);
+            font-size: 1.2rem;
+            line-height: 1.9;
+        }
+
+        .final-line {
+            width: 1px;
+            height: 90px;
+            background: linear-gradient(
+                transparent,
+                var(--terracotta),
+                transparent
+            );
+            margin: 55px auto;
+        }
+
+        .signature {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.35rem;
+            color: var(--sage-light);
+        }
+
+        .forever {
+            margin-top: 80px;
+            font-size: .65rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.25);
+        }
+
+        /* ==========================================================
+           REVEAL
+        ========================================================== */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(45px);
+            transition:
+                opacity 1s ease,
+                transform 1s cubic-bezier(.2,.7,.2,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: .1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: .2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: .3s;
+        }
+
+        /* ==========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 850px) {
+
+            .container {
+                width: min(100% - 32px, 1160px);
+            }
+
+            .letter {
+                padding: 100px 0;
+            }
+
+            .letter-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .letter-side {
+                position: static;
+            }
+
+            .letter-number {
+                display: none;
+            }
+
+            .values-head {
+                display: block;
+            }
+
+            .values-intro {
+                margin-top: 30px;
+            }
+
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .value-card {
+                min-height: auto;
+            }
+
+            .person {
+                width: 145px;
+                height: 145px;
+            }
+
+            .person:nth-child(even) {
+                margin-top: 0;
+            }
+
+            .memory {
+                grid-template-columns: 50px 1fr 25px;
+                gap: 15px;
+            }
+
+            .hero-orbit {
+                width: 90vw;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="progress" id="progress"></div>
+
+
+    <!-- ==========================================================
+         HERO
+    =========================================================== -->
+
+    <section class="hero">
+
+        <div class="stars" id="stars"></div>
+
+        <div class="hero-orbit"></div>
+        <div class="hero-orbit two"></div>
+
+        <div class="hero-content">
+
+            <div class="hero-kicker eyebrow">
+                Algunas historias no terminan
+            </div>
+
+            <h1>
+                visionaria<span>mente</span>
+            </h1>
+
+            <p class="hero-sub">
+                Fuimos un grupo de especialistas en bienestar.
+                Pero, en algún momento del camino,
+                nos convertimos en algo mucho más difícil de explicar.
+            </p>
+
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Nuestra historia</span>
+            <div class="scroll-line"></div>
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         CARTA
+    =========================================================== -->
+
+    <section class="letter">
+
+        <div class="container letter-grid">
+
+            <aside class="letter-side reveal">
+
+                <div class="letter-number">01</div>
+
+                <span class="eyebrow">
+                    Antes de despedirnos
+                </span>
+
+            </aside>
+
+
+            <div class="letter-content">
+
+                <h2 class="reveal">
+                    Hay equipos que trabajan juntos.
+                    Y hay equipos que
+                    <em>se encuentran.</em>
+                </h2>
+
+                <p class="reveal">
+                    Visionariamente nació como un grupo de profesionales.
+                    Psicólogos, terapeutas y especialistas en bienestar
+                    reunidos alrededor de una tarea que, sobre el papel,
+                    parecía sencilla: acompañar a otras personas.
+                    Escuchar. Contener. Orientar. Ayudar a reconstruir.
+                </p>
+
+                <p class="reveal">
+                    Pero mientras acompañábamos historias ajenas,
+                    sin darnos demasiada cuenta también fuimos construyendo
+                    una historia propia. Una hecha de conversaciones,
+                    aprendizajes, encuentros, desacuerdos bien llevados,
+                    preguntas difíciles, risas inesperadas y esa particular
+                    forma de sentir que, aun detrás de una pantalla,
+                    había alguien del otro lado.
+                </p>
+
+                <p class="reveal">
+                    Fuimos profesionales capaces de sostener a otros,
+                    pero también personas capaces de sostenernos entre nosotros.
+                    Hubo asertividad sin perder la ternura, resiliencia sin
+                    romantizar las dificultades y excelencia profesional
+                    sin olvidar nunca la humanidad que debía acompañarla.
+                </p>
+
+                <div class="letter-highlight reveal">
+                    <p>
+                        Tal vez eso fue Visionariamente:
+                        un lugar donde cuidar a otros
+                        nunca estuvo separado de cuidarnos entre nosotros.
+                    </p>
+                </div>
+
+                <p class="reveal">
+                    Hoy este grupo llega a una despedida. Y las despedidas
+                    suelen hacernos pensar en aquello que termina. Sin embargo,
+                    hay vínculos que se resisten a ser explicados en pasado.
+                    Porque algunas personas dejan de compartir un espacio,
+                    pero no dejan de formar parte de nuestra historia.
+                </p>
+
+                <p class="reveal">
+                    Por eso esto no pretende ser un adiós solemne.
+                    Es simplemente una forma de detener el tiempo por unos
+                    minutos, mirar hacia atrás y reconocer algo que quizá
+                    mientras ocurría no alcanzábamos a dimensionar:
+                    tuvimos la suerte de coincidir.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         LO QUE FUIMOS
+    =========================================================== -->
+
+    <section class="values">
+
+        <div class="container">
+
+            <div class="values-head">
+
+                <div>
+                    <span class="eyebrow reveal">
+                        Lo que construimos
+                    </span>
+
+                    <h2 class="reveal">
+                        No era solamente
+                        un equipo.
+                        <em>Era una manera de estar.</em>
+                    </h2>
+                </div>
+
+                <p class="values-intro reveal">
+                    Hay cualidades que se escriben en un perfil profesional.
+                    Y hay otras que solo se descubren cuando las personas
+                    atraviesan juntas el tiempo.
+                </p>
+
+            </div>
+
+
+            <div class="value-grid">
+
+                <article class="value-card reveal">
+                    <div class="value-icon">01 —</div>
+                    <h3>Acogientes</h3>
+                    <p>
+                        Porque sabíamos que escuchar no era simplemente
+                        esperar nuestro turno para hablar. Había lugar
+                        para llegar siendo exactamente quienes éramos.
+                    </p>
+                </article>
+
+                <article class="value-card reveal reveal-delay-1">
+                    <div class="value-icon">02 —</div>
+                    <h3>Asertivos</h3>
+                    <p>
+                        Pudimos hablar claro sin dejar de cuidarnos.
+                        Disentir sin romper. Preguntar sin juzgar.
+                        Decir lo necesario sin olvidar a la persona
+                        que estaba escuchando.
+                    </p>
+                </article>
+
+                <article class="value-card reveal reveal-delay-2">
+                    <div class="value-icon">03 —</div>
+                    <h3>Resilientes</h3>
+                    <p>
+                        Hubo cambios, incertidumbres y días difíciles.
+                        Y aun así encontramos formas de adaptarnos,
+                        continuar y acompañarnos en el proceso.
+                    </p>
+                </article>
+
+                <article class="value-card reveal">
+                    <div class="value-icon">04 —</div>
+                    <h3>Humanos</h3>
+                    <p>
+                        Antes que especialistas, fuimos personas.
+                        Con días buenos y malos, fortalezas, dudas,
+                        cansancio, humor y una enorme capacidad
+                        para reconocernos en el otro.
+                    </p>
+                </article>
+
+                <article class="value-card reveal reveal-delay-1">
+                    <div class="value-icon">05 —</div>
+                    <h3>Profesionales</h3>
+                    <p>
+                        Nos tomamos en serio aquello que hacíamos.
+                        Compartimos conocimientos, perspectivas
+                        y preguntas con la convicción de que siempre
+                        había algo nuevo que aprender.
+                    </p>
+                </article>
+
+                <article class="value-card reveal reveal-delay-2">
+                    <div class="value-icon">06 —</div>
+                    <h3>Unidos</h3>
+                    <p>
+                        Quizá esta sea la palabra que contiene a todas
+                        las demás. Porque más allá de roles, horarios
+                        y responsabilidades, aprendimos a sentirnos parte.
+                    </p>
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         PERSONAS
+    =========================================================== -->
+
+    <section class="constellation">
+
+        <div class="container">
+
+            <span class="eyebrow reveal">
+                Nuestra constelación
+            </span>
+
+            <h2 class="reveal">
+                Un equipo nunca es un nombre.
+                Son las personas que lo hacen posible.
+            </h2>
+
+            <p class="reveal">
+                Cada persona llegó con su propia historia,
+                su forma de mirar el mundo y su manera particular
+                de acompañar. Visionariamente existió porque
+                todas esas diferencias encontraron un lugar común.
+            </p>
+
+
+            <!--
+                CAMBIA LOS NOMBRES.
+                Puedes agregar o eliminar tantos .person como necesites.
+            -->
+
+            <div class="people">
+
+                <div class="person reveal">
+                    <span class="person-name">Alejadra Álvarez</span>
+                </div>
+
+                <div class="person reveal">
+                    <span class="person-name">Andrea Gil</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Carlos Capecchi</span>
+                </div>
+
+                <div class="person reveal">
+                    <span class="person-name">Cinthia Hernández</span>
+                </div>
+
+                <div class="person reveal">
+                    <span class="person-name">Clara Romero</span>
+                </div>
+
+                <div class="person reveal">
+                    <span class="person-name">Cristina Aoun</span>
+                </div>
+
+                <div class="person reveal">
+                    <span class="person-name">Diana Álvarez</span>
+                </div>
+
+                <div class="person reveal">
+                    <span class="person-name">Erika Carreño</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Felipe Barría</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Gabriela Díaz</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Laided Padrón</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Leida Pérez</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Rebeca Maestre</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Tomás Valencia</span>
+                </div>
+                <div class="person reveal">
+                    <span class="person-name">Yeimi Romero</span>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         FRASE CENTRAL
+    =========================================================== -->
+
+    <section class="big-quote">
+
+        <div class="quote-mark">“</div>
+
+        <div class="container">
+
+            <blockquote class="reveal">
+                Qué extraordinaria coincidencia
+                haber estado en este mundo,
+                en este momento,
+                haciendo este trabajo
+                y haber tenido la suerte de
+                <em>encontrarnos.</em>
+            </blockquote>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         LO QUE QUEDA
+    =========================================================== -->
+
+    <section class="memories">
+
+        <div class="container">
+
+            <div class="memories-header">
+
+                <span class="eyebrow reveal">
+                    Después de Visionariamente
+                </span>
+
+                <h2 class="reveal">
+                    Hay cosas que ningún cierre puede llevarse.
+                </h2>
+
+                <p class="reveal">
+                    Porque un grupo puede dejar de existir formalmente,
+                    pero aquello que produjo entre sus integrantes
+                    puede seguir apareciendo mucho tiempo después.
+                </p>
+
+            </div>
+
+
+            <div class="memory-list">
+
+                <div class="memory reveal">
+                    <span class="memory-number">01</span>
+                    <span class="memory-text">
+                        Las conversaciones que nos hicieron pensar distinto.
+                    </span>
+                    <span class="memory-arrow">↗</span>
+                </div>
+
+                <div class="memory reveal">
+                    <span class="memory-number">02</span>
+                    <span class="memory-text">
+                        Las risas que aparecieron justo cuando hacían falta.
+                    </span>
+                    <span class="memory-arrow">↗</span>
+                </div>
+
+                <div class="memory reveal">
+                    <span class="memory-number">03</span>
+                    <span class="memory-text">
+                        Las veces que alguien dijo: «Cuenta conmigo».
+                    </span>
+                    <span class="memory-arrow">↗</span>
+                </div>
+
+                <div class="memory reveal">
+                    <span class="memory-number">04</span>
+                    <span class="memory-text">
+                        Todo lo que aprendimos unos de otros.
+                    </span>
+                    <span class="memory-arrow">↗</span>
+                </div>
+
+                <div class="memory reveal">
+                    <span class="memory-number">05</span>
+                    <span class="memory-text">
+                        La certeza de que no recorrimos esta parte del camino solos.
+                    </span>
+                    <span class="memory-arrow">↗</span>
+                </div>
+
+                <div class="memory reveal">
+                    <span class="memory-number">06</span>
+                    <span class="memory-text">
+                        La huella que cada uno dejó en los demás.
+                    </span>
+                    <span class="memory-arrow">↗</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         DESPEDIDA
+    =========================================================== -->
+
+    <section class="final">
+
+        <div class="stars" id="finalStars"></div>
+
+        <div class="final-content">
+
+            <p class="final-small reveal">
+                Para Visionariamente
+            </p>
+
+            <h2 class="reveal">
+                No todo lo que termina
+                <em>desaparece.</em>
+            </h2>
+
+            <p class="final-text reveal">
+                Algo de cada conversación, de cada encuentro,
+                de cada aprendizaje y de cada persona seguirá viajando
+                con nosotros hacia los lugares que vienen.
+                <br><br>
+                Quizá eso sea lo más hermoso de haber formado parte
+                de un buen equipo: descubrir que, incluso cuando
+                cada uno vuelve a tomar su propio camino,
+                ya no somos exactamente los mismos que llegaron.
+            </p>
+
+            <div class="final-line reveal"></div>
+
+            <p class="signature reveal">
+                Gracias por coincidir.<br>
+                Gracias por acompañar.<br>
+                Gracias por haber sido Visionariamente.
+            </p>
+
+            <p class="forever reveal">
+                Lo vivido permanece
+                &nbsp;&nbsp; ✦ &nbsp;&nbsp;
+                2026
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        /* ==========================================================
+           SCROLL PROGRESS
+        ========================================================== */
+
+        const progress = document.getElementById("progress");
+
+        window.addEventListener("scroll", () => {
+
+            const scrollTop =
+                document.documentElement.scrollTop ||
+                document.body.scrollTop;
+
+            const scrollHeight =
+                document.documentElement.scrollHeight -
+                document.documentElement.clientHeight;
+
+            const percent =
+                scrollHeight > 0
+                    ? (scrollTop / scrollHeight) * 100
+                    : 0;
+
+            progress.style.width = percent + "%";
+
+        });
+
+
+        /* ==========================================================
+           REVEAL ON SCROLL
+        ========================================================== */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
+
+        const observer =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            observer.unobserve(entry.target);
+
+                        }
+
+                    });
+
+                },
+
+                {
+                    threshold: 0.13
+                }
+
+            );
+
+        revealElements.forEach(el => observer.observe(el));
+
+
+        /* ==========================================================
+           GENERADOR DE ESTRELLAS
+        ========================================================== */
+
+        function createStars(containerId, amount) {
+
+            const container =
+                document.getElementById(containerId);
+
+            if (!container) return;
+
+            for (let i = 0; i < amount; i++) {
+
+                const star =
+                    document.createElement("span");
+
+                star.classList.add("star");
+
+                star.style.left =
+                    Math.random() * 100 + "%";
+
+                star.style.top =
+                    Math.random() * 100 + "%";
+
+                const size =
+                    Math.random() * 2.5 + 1;
+
+                star.style.width =
+                    size + "px";
+
+                star.style.height =
+                    size + "px";
+
+                star.style.animationDelay =
+                    Math.random() * 5 + "s";
+
+                star.style.animationDuration =
+                    (Math.random() * 3 + 3) + "s";
+
+                container.appendChild(star);
+
+            }
+
+        }
+
+        createStars("stars", 70);
+        createStars("finalStars", 55);
+
+
+        /* ==========================================================
+           PARALLAX MUY SUAVE EN HERO
+        ========================================================== */
+
+        const hero =
+            document.querySelector(".hero-content");
+
+        window.addEventListener("scroll", () => {
+
+            const y =
+                window.scrollY;
+
+            if (y < window.innerHeight) {
+
+                hero.style.transform =
+                    `translateY(${y * 0.12}px)`;
+
+                hero.style.opacity =
+                    Math.max(
+                        0,
+                        1 - y / (window.innerHeight * .85)
+                    );
+
+            }
+
+        });
+
+
+        /* ==========================================================
+           PEQUEÑA INTERACCIÓN EN LOS NOMBRES
+        ========================================================== */
+
+        document
+            .querySelectorAll(".person")
+            .forEach(person => {
+
+                person.addEventListener("click", () => {
+
+                    person.animate(
+                        [
+                            { transform: "scale(1)" },
+                            { transform: "scale(1.08)" },
+                            { transform: "scale(1)" }
+                        ],
+                        {
+                            duration: 450,
+                            easing: "ease"
+                        }
+                    );
+
+                });
+
+            });
+
+    </script>
+
+</body>
+</html>
